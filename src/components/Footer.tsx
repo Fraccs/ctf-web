@@ -1,16 +1,4 @@
-import config from "@/utils/config"
-
-const getVersion = async () => {
-  const response = await fetch(`
-    ${config.GITHUB_API_URL}/repos/${config.GITHUB_USER}/${config.GITHUB_REPO}/releases/latest
-  `, {
-    headers: {
-      "Authorization": `Bearer ${config.GITHUB_TOKEN}`
-    }
-  })
-
-  return response.json()
-}
+import { getVersion } from "@/services/version"
 
 export default async function Footer() {
   const version = await getVersion()
