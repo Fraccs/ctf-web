@@ -21,8 +21,26 @@ const getAll = async (): Promise<CompetitionRaw[]> => {
   }
 }
 
+const getOne = async (name: string): Promise<CompetitionRaw[]> => {
+  try {
+    const response = await axios.get(`${baseUrl}/${name}`, {
+      headers: {
+        "Authorization": `Bearer ${config.GITHUB_TOKEN}`
+      }
+    })
+
+    return response.data
+  }
+  catch(e) {
+    console.error(e)
+
+    return []
+  }
+}
+
 const competitionsService = {
-  getAll
+  getAll,
+  getOne
 }
 
 export default competitionsService
