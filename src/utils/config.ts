@@ -1,7 +1,3 @@
-import dotenv from "dotenv"
-
-dotenv.config()
-
 const GITHUB_API_URL = process.env.GITHUB_API_URL ?? ""
 const GITHUB_USER = process.env.GITHUB_USER ?? ""
 const GITHUB_REPO = process.env.GITHUB_REPO ?? ""
