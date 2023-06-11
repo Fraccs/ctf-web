@@ -1,12 +1,18 @@
 import Link from "next/link"
-import competitionsService from "@/services/competitions"
+import githubService from "@/services/github"
+import config from "@/utils/config"
+import { GitHubRepoContent } from "@/interfaces/github"
 
 interface CompetitionProps {
   params: { name: string }
 }
 
 export default async function Competition({ params }: CompetitionProps) {
-  const competitions = await competitionsService.getAll()
+  const competitionsResponse = await githubService.apiRequest<GitHubRepoContent[]>({
+    url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/contents`
+  })
+
+  const competitions = competitionsResponse.data
 
   // Check if `params.name` is a valid competition
   if(!competitions
@@ -19,7 +25,11 @@ export default async function Competition({ params }: CompetitionProps) {
     )
   }
 
-  const editions = await competitionsService.getOne(params.name)
+  const editionsResponse = await githubService.apiRequest<GitHubRepoContent[]>({
+    url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/contents/${params.name}`
+  })
+
+  const editions = editionsResponse.data
 
   return (
     <main className="h-full bg-zinc-950 text-white overflow-y-scroll">
