@@ -3,12 +3,16 @@ import githubService from "@/services/github"
 import config from "@/utils/config"
 import { GitHubRepoContent } from "@/interfaces/github"
 
-export default async function Competitions() {
+const getCompetitions = async () => {
   const response = await githubService.apiRequest<GitHubRepoContent[]>({
     url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/contents`
   })
 
-  const competitions = response.data
+  return response.data
+}
+
+export default async function Competitions() {
+  const competitions = await getCompetitions()
 
   return (
     <main className="h-full bg-zinc-950 text-white overflow-y-scroll">
