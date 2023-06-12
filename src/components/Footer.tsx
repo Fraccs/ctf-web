@@ -2,12 +2,16 @@ import githubService from "@/services/github"
 import { GithubVersion } from "@/interfaces/github"
 import config from "@/utils/config"
 
-export default async function Footer() {
+const getVersion = async () => {
   const response = await githubService.apiRequest<GithubVersion>({
     url: `/repos/${config.GITHUB_USER}/${config.GITHUB_REPO}/releases/latest`
   })
 
-  const version = response.data
+  return response.data
+}
+
+export default async function Footer() {
+  const version = await getVersion()
 
   return (
     <footer className="flex flex-col gap-1 p-2 bg-zinc-900 border-t border-zinc-800 text-xs text-white md:flex-row">
