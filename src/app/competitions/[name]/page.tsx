@@ -20,9 +20,7 @@ export default async function Competition({ params }: CompetitionProps) {
     .map(c => c.name)
     .includes(params.name)
   ) {
-    return (
-      <></> // TODO: Handle errors with next `error.tsx`
-    )
+    throw new Error("The competition doesn't exist")
   }
 
   const editionsResponse = await githubService.apiRequest<GitHubRepoContent[]>({
