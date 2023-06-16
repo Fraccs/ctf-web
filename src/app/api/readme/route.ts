@@ -8,5 +8,7 @@ export async function GET() {
     url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/contents/README.md`
   })
 
-  return NextResponse.json(response.data.content)
+  return NextResponse.json({
+    readme: response.data.content
+  })
 }

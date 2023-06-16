@@ -1,19 +1,24 @@
 "use client"
 
-import axios from "axios"
+import apiService from "@/services/api"
 import { useEffect, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
+
+interface ReadmeResponse {
+  readme: string
+}
 
 export default function Readme() {
   const [readme, setReadme] = useState("")
 
   useEffect(() => {
     const fetchReadme = async () => {
-      const response = await axios.get("/api/readme")
-      const readme = await response.data
+      const response = await apiService.apiRequest<ReadmeResponse>({
+        url: "/readme"
+      })
 
-      setReadme(atob(readme))
+      setReadme(atob(response.data.readme))
     }
 
     fetchReadme()
