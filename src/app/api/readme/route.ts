@@ -1,15 +1,12 @@
 import { NextResponse } from "next/server"
-import axios from "axios"
+import { GitHubRepoContent } from "@/interfaces/github"
+import githubService from "@/services/github"
 import config from "@/utils/config"
 
 export async function GET() {
-  const response = await axios.get(`${config.GITHUB_API_URL}/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/contents/README.md`, {
-    headers: {
-      "Authorization": `Bearer ${config.GITHUB_TOKEN}`
-    }
+  const response = await githubService.apiRequest<GitHubRepoContent>({
+    url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/contents/README.md`
   })
 
-  const { content } = await response.data
-
-  return NextResponse.json(content)
+  return NextResponse.json(response.data.content)
 }
