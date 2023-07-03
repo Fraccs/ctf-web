@@ -1,11 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { AiOutlineEnter, AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai"
-import { GithubGitTreeItem } from "@/interfaces/github"
+import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai"
+import { RepoTreeNode } from "@/app/competitions/layout"
+import SidebarItem from "./SidebarItem"
 
 interface SidebarProps {
-  repoTree: GithubGitTreeItem[]
+  repoTree: RepoTreeNode[]
 }
 
 export default function Sidebar({ repoTree }: SidebarProps) {
@@ -26,7 +27,7 @@ export default function Sidebar({ repoTree }: SidebarProps) {
   }
 
   return (
-    <aside className="flex flex-col gap-2 w-72 text-white bg-zinc-900 border-r border-zinc-800">
+    <aside className="flex flex-col w-96 text-white bg-zinc-900 border-r border-zinc-800">
       <article className="sticky bottom-0 flex items-center justify-end p-4 bg-zinc-900 border-b border-zinc-800">
         <button type="button" onClick={() => setIsOpen(!isOpen)}>
           <AiOutlineMenuFold
@@ -35,16 +36,14 @@ export default function Sidebar({ repoTree }: SidebarProps) {
         </button>
       </article>
       <div className="flex flex-col gap-4 p-4 overflow-x-hidden overflow-y-scroll">
-        {repoTree?.filter(item => item.type === "tree").map(item => {
+        {repoTree?.map((node, i) => {
           return (
-            <article key={item.sha}>
-              <span className="flex items-center gap-4">
-                <AiOutlineEnter
-                  style={{ transform: "scale(-1, 1)" }}
-                />
-                {item.path}
-              </span>
-            </article>
+            <SidebarItem
+              key={i}
+              path={node.path}
+              sha={node.sha}
+              sub={node.sub}
+            />
           )
         })}
       </div>
