@@ -21,7 +21,7 @@ export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
   const tree = await getRepoTree(sha)
 
   return (
-    <main className="h-full bg-zinc-950 text-white overflow-y-scroll">
+    <div className="h-full w-full bg-zinc-950 text-white overflow-y-scroll">
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
         {tree?.map(async item => {
           if(item.type === "tree") {
@@ -63,6 +63,6 @@ export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
           }
         })}
       </div>
-    </main>
+    </div>
   )
 }
