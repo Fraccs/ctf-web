@@ -42,7 +42,7 @@ const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): RepoTreeNo
       const path = i === 0 ? part : `${parent.path}/${part}`
 
       if(!map[path]) {
-        const newObject: RepoTreeNode = { path, sha: "", sub: [] }
+        const newObject: RepoTreeNode = { path: part, sha: "", sub: [] }
 
         map[path] = newObject
 
