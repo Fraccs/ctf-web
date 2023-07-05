@@ -6,6 +6,7 @@ import Sidebar from "@/components/Sidebar"
 
 export interface RepoTreeNode {
   path: string
+  type: "blob" | "tree"
   sha: string
   sub?: RepoTreeNode[]
 }
@@ -20,15 +21,9 @@ const getGithubGitTree = async () => {
 
 const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): RepoTreeNode[] => {
   const nodes = githubGitTree
-    ?.filter(node => node.type === "tree")
-    .map(node => {
-      return {
-        path: node.path,
-        sha: node.sha
-      }
-    })
+    ?.filter(node => node.path !== ".gitignore" && node.path !== "README.md" && node.path !== "writeups-template.md")
 
-  const root: RepoTreeNode = { path: "/", sha: config.GITHUB_TREE_SHA, sub: [] }
+  const root: RepoTreeNode = { path: "/", type: "tree", sha: config.GITHUB_TREE_SHA, sub: [] }
 
   const map: { [path: string]: RepoTreeNode } = { "": root }
 
@@ -42,7 +37,7 @@ const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): RepoTreeNo
       const path = i === 0 ? part : `${parent.path}/${part}`
 
       if(!map[path]) {
-        const newObject: RepoTreeNode = { path, sha: "", sub: [] }
+        const newObject: RepoTreeNode = { path, type: node.type, sha: "", sub: [] }
 
         map[path] = newObject
 
@@ -55,7 +50,28 @@ const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): RepoTreeNo
     parent.sha = node.sha
   })
 
-  return root.sub || []
+  /*
+   * If a directory of a challenge is reached, the subdirectories/files are removed.
+   * If any type of blob is contained in a directory, that directory is consedered
+   * a challenge directory.
+   */
+  const fixDepths = (nodes?: RepoTreeNode[]) => {
+    if(!nodes) {
+      return
+    }
+
+    nodes?.forEach(node => {
+      if(node.sub?.some(s => s.type === "blob")) {
+        node.sub = []
+      }
+
+      fixDepths(node.sub)
+    })
+
+    return nodes
+  }
+
+  return fixDepths(root.sub) || []
 }
 
 export default async function Layout({ children }: PropsWithChildren) {
