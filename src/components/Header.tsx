@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { AiOutlineGithub, AiOutlineLogin } from "react-icons/ai"
 import config from "@/utils/config"
-import flagImg from "../assets/images/triangular-flag.png"
+import flagImg from "@/assets/images/triangular-flag.png"
 
 export default function Header() {
   return (

@@ -1,4 +1,4 @@
-import Version from "./Version"
+import Version from "@/components/Version"
 
 export default async function Footer() {
   return (
