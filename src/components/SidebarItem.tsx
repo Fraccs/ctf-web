@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useState } from "react"
 import { AiOutlineCaretRight, AiOutlineFlag } from "react-icons/ai"
-import { RepoTreeNode } from "@/app/competitions/layout"
+import { RepoTreeNode } from "@/interfaces/repoTree"
 
 interface SidebarItemProps {
   path: string

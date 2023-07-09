@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai"
-import { RepoTreeNode } from "@/app/competitions/layout"
-import SidebarItem from "./SidebarItem"
+import { RepoTreeNode } from "@/interfaces/repoTree"
+import SidebarItem from "@/components/SidebarItem"
 
 interface SidebarProps {
   repoTree: RepoTreeNode[]

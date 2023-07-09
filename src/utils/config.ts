@@ -2,7 +2,6 @@ const GITHUB_API_URL = process.env.GITHUB_API_URL ?? ""
 const GITHUB_USER = process.env.GITHUB_USER ?? ""
 const GITHUB_REPO = process.env.GITHUB_REPO ?? ""
 const GITHUB_TARGET_REPO = process.env.GITHUB_TARGET_REPO ?? ""
-const GITHUB_TREE_SHA = process.env.GITHUB_TREE_SHA ?? ""
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN ?? ""
 
 const config = {
@@ -10,7 +9,6 @@ const config = {
   GITHUB_USER,
   GITHUB_REPO,
   GITHUB_TARGET_REPO,
-  GITHUB_TREE_SHA,
   GITHUB_TOKEN
 }
 
