@@ -1,5 +1,5 @@
+import AxiosInstanceCreator from "@/services/AxiosInstanceCreator"
 import config from "@/utils/config"
-import AxiosInstanceCreator from "./AxiosInstanceCreator"
 
 const headers =  {
   "Accept": "application/vnd.github+json",

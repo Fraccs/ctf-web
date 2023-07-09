@@ -1,24 +1,17 @@
 import Link from "next/link"
 import { AiFillFolder, AiFillFlag } from "react-icons/ai"
-import { GitHubRepoContent, GithubGitTree } from "@/interfaces/github"
+import { GitHubRepoContent } from "@/interfaces/github"
 import githubService from "@/services/github"
+import { getGithubGitTree } from "@/utils/github"
 import config from "@/utils/config"
-import Markdown from "./Markdown"
+import Markdown from "@/components/Markdown"
 
 interface VisualizeTreeProps {
-  sha?: string
-}
-
-const getRepoTree = async (sha?: string, recursive?: boolean) => {
-  const response = await githubService.apiRequest<GithubGitTree>({
-    url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/git/trees/${sha || config.GITHUB_TREE_SHA}${recursive ? "?recursive=true" : ""}`
-  })
-
-  return response.data.tree
+  sha: string
 }
 
 export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
-  const tree = await getRepoTree(sha)
+  const { tree } = await getGithubGitTree(sha)
 
   const maxDepthReached = tree?.some(node => (
     node.type === "blob" &&
