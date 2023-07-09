@@ -1,3 +1,12 @@
+export interface GithubGitBranch {
+  name: string
+  commit: {
+    sha: string
+    url: string
+  }
+  protected: boolean
+}
+
 export interface GithubGitTree {
   sha: string
   url: string
