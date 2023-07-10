@@ -1,11 +1,11 @@
 import { GithubGitBranch, GithubGitTree, GithubGitTreeItem } from "@/interfaces/github"
 import { RepoTreeNode } from "@/interfaces/repoTree"
 import githubService from "@/services/github"
-import config from "@/utils/config"
+import env from "@/config/env"
 
 export const getGithubGitTree = async (sha: string, recursive?: boolean) => {
   const response = await githubService.apiRequest<GithubGitTree>({
-    url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/git/trees/${sha}${recursive ? "?recursive=true" : ""}`
+    url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/git/trees/${sha}${recursive ? "?recursive=true" : ""}`
   })
 
   return response.data
@@ -13,7 +13,7 @@ export const getGithubGitTree = async (sha: string, recursive?: boolean) => {
 
 export const getGithubGitMainSha = async () => {
   const response = await githubService.apiRequest<GithubGitBranch[]>({
-    url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/branches`
+    url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/branches`
   })
 
   return response.data.find(item => item.name === "main")?.commit.sha!

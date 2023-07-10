@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server"
 import { GithubVersion } from "@/interfaces/github"
 import githubService from "@/services/github"
-import config from "@/utils/config"
+import env from "@/config/env"
 
 export async function GET() {
   const response = await githubService.apiRequest<GithubVersion>({
-    url: `/repos/${config.GITHUB_USER}/${config.GITHUB_REPO}/releases/latest`
+    url: `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/releases/latest`
   })
 
   return NextResponse.json({
