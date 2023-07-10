@@ -3,6 +3,17 @@ import { RepoTreeNode } from "@/interfaces/repoTree"
 import githubService from "@/services/github"
 import env from "@/config/env"
 
+export const isGithubRootFile = (fileName: string): boolean => {
+  // Files in the root of the repository
+  const rootFiles = [
+    ".gitignore",
+    "README.md",
+    "writeups-template.md"
+  ]
+
+  return rootFiles.includes(fileName)
+}
+
 export const getGithubGitTree = async (sha: string, recursive?: boolean) => {
   const response = await githubService.apiRequest<GithubGitTree>({
     url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/git/trees/${sha}${recursive ? "?recursive=true" : ""}`
@@ -20,11 +31,9 @@ export const getGithubGitMainSha = async () => {
 }
 
 export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): RepoTreeNode[] => {
-  const nodes = githubGitTree
-    ?.filter(node => node.path !== ".gitignore" && node.path !== "README.md" && node.path !== "writeups-template.md")
+  const nodes = githubGitTree?.filter(node => !isGithubRootFile(node.path))
 
   const root: RepoTreeNode = { path: "/", type: "tree", sha: "", sub: [] }
-
   const map: { [path: string]: RepoTreeNode } = { "": root }
 
   nodes.forEach(node => {

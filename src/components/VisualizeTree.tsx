@@ -3,6 +3,7 @@ import { AiFillFolder, AiFillFlag } from "react-icons/ai"
 import { GitHubRepoContent } from "@/interfaces/github"
 import githubService from "@/services/github"
 import { getGithubGitTree } from "@/utils/github"
+import { isGithubRootFile } from "@/utils/github"
 import env from "@/config/env"
 import Markdown from "@/components/Markdown"
 
@@ -14,10 +15,7 @@ export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
   const { tree } = await getGithubGitTree(sha)
 
   const maxDepthReached = tree?.some(node => (
-    node.type === "blob" &&
-    node.path !== "writeups-template.md" &&
-    node.path !== "README.md" &&
-    node.path !== ".gitignore"
+    node.type === "blob" && (!isGithubRootFile(node.path))
   ))
 
   if(maxDepthReached) {
