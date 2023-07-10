@@ -8,7 +8,7 @@ interface ReadmeResponse {
   readme: string
 }
 
-export default function Readme() {
+export default function Page() {
   const [readme, setReadme] = useState("")
 
   useEffect(() => {
