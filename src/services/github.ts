@@ -1,4 +1,4 @@
-import AxiosInstanceCreator from "@/services/AxiosInstanceCreator"
+import AxiosInstanceCreator from "@/utils/AxiosInstanceCreator"
 import config from "@/utils/config"
 
 const headers =  {

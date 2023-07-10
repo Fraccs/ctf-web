@@ -22,7 +22,7 @@ class AxiosInstanceCreator {
     return {
       data: response.data,
       status: response.status,
-      message: response.statusText,
+      message: response.statusText
     }
   }
 }

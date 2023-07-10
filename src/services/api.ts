@@ -1,4 +1,4 @@
-import AxiosInstanceCreator from "@/services/AxiosInstanceCreator"
+import AxiosInstanceCreator from "@/utils/AxiosInstanceCreator"
 
 const headers =  {
   "Content-Type": "application/json"
