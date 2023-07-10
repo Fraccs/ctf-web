@@ -30,10 +30,10 @@ export const getGithubGitMainSha = async () => {
   return response.data.find(item => item.name === "main")?.commit.sha!
 }
 
-export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): RepoTree => {
-  const nodes = githubGitTree?.filter(node => !isGithubRootFile(node.path))
+export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTree): RepoTree => {
+  const nodes = githubGitTree.tree.filter(node => !isGithubRootFile(node.path))
 
-  const root: RepoTreeNode = { path: "/", type: "tree", sha: "", sub: [] }
+  const root: RepoTreeNode = { path: "/", type: "tree", sha: githubGitTree.sha, sub: [] }
   const tree: RepoTree = { root }
 
   const map: { [path: string]: RepoTreeNode } = { "": root }

@@ -4,9 +4,9 @@ import Sidebar from "@/components/Sidebar"
 
 export default async function Layout({ children }: PropsWithChildren) {
   const gitTreeSha = await getGithubGitMainSha()
-  const { tree } = await getGithubGitTree(gitTreeSha, true)
+  const githubGitTree = await getGithubGitTree(gitTreeSha, true)
 
-  const repoTree = githubGitTreeToRepoTree(tree)
+  const repoTree = githubGitTreeToRepoTree(githubGitTree)
 
   return (
     <main className="h-full w-full flex">
