@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai"
-import { RepoTreeNode } from "@/interfaces/repoTree"
+import RepoTree from "@/interfaces/repoTree"
 import SidebarItem from "@/components/SidebarItem"
 
 interface SidebarProps {
-  repoTree: RepoTreeNode[]
+  repoTree: RepoTree
 }
 
 export default function Sidebar({ repoTree }: SidebarProps) {
@@ -36,7 +36,7 @@ export default function Sidebar({ repoTree }: SidebarProps) {
         </button>
       </article>
       <div className="flex flex-col gap-4 p-4 overflow-x-hidden overflow-y-scroll">
-        {repoTree?.map((node, i) => {
+        {repoTree.root.sub?.map((node, i) => {
           return (
             <SidebarItem
               key={i}

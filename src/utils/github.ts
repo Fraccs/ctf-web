@@ -1,5 +1,5 @@
 import { GithubGitBranch, GithubGitTree, GithubGitTreeItem } from "@/interfaces/github"
-import { RepoTreeNode } from "@/interfaces/repoTree"
+import RepoTree, { RepoTreeNode } from "@/interfaces/repoTree"
 import githubService from "@/services/github"
 import env from "@/config/env"
 
@@ -30,10 +30,12 @@ export const getGithubGitMainSha = async () => {
   return response.data.find(item => item.name === "main")?.commit.sha!
 }
 
-export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): RepoTreeNode[] => {
+export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): RepoTree => {
   const nodes = githubGitTree?.filter(node => !isGithubRootFile(node.path))
 
   const root: RepoTreeNode = { path: "/", type: "tree", sha: "", sub: [] }
+  const tree: RepoTree = { root }
+
   const map: { [path: string]: RepoTreeNode } = { "": root }
 
   nodes.forEach(node => {
@@ -80,5 +82,7 @@ export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): Rep
     return nodes
   }
 
-  return fixDepths(root.sub) || []
+  fixDepths(tree.root.sub)
+
+  return tree
 }
