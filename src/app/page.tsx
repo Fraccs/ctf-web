@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-export default function Home() {
+export default function Page() {
   return (
     <main className="h-full flex flex-col items-center justify-center gap-16 bg-zinc-950">
       <span className="p-2 font-bold text-5xl text-center text-transparent italic bg-clip-text bg-gradient-to-r from-zinc-950 via-white to-zinc-950 animate-gradient-x">Collection of <span className="text-rose-600">CTF</span> solves and writeups</span>

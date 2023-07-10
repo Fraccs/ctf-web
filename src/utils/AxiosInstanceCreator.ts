@@ -6,7 +6,7 @@ interface ApiResponse<T> {
   message: string
 }
 
-class AxiosInstanceCreator {
+export default class AxiosInstanceCreator {
   instance: AxiosInstance
 
   constructor(baseURL: string, headers: any) {
@@ -22,9 +22,7 @@ class AxiosInstanceCreator {
     return {
       data: response.data,
       status: response.status,
-      message: response.statusText,
+      message: response.statusText
     }
   }
 }
-
-export default AxiosInstanceCreator

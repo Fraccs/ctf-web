@@ -1,11 +1,22 @@
 import { GithubGitBranch, GithubGitTree, GithubGitTreeItem } from "@/interfaces/github"
-import { RepoTreeNode } from "@/interfaces/repoTree"
+import RepoTree, { RepoTreeNode } from "@/interfaces/repoTree"
 import githubService from "@/services/github"
-import config from "@/utils/config"
+import env from "@/config/env"
+
+export const isGithubRootFile = (fileName: string): boolean => {
+  // Files in the root of the repository
+  const rootFiles = [
+    ".gitignore",
+    "README.md",
+    "writeups-template.md"
+  ]
+
+  return rootFiles.includes(fileName)
+}
 
 export const getGithubGitTree = async (sha: string, recursive?: boolean) => {
   const response = await githubService.apiRequest<GithubGitTree>({
-    url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/git/trees/${sha}${recursive ? "?recursive=true" : ""}`
+    url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/git/trees/${sha}${recursive ? "?recursive=true" : ""}`
   })
 
   return response.data
@@ -13,17 +24,17 @@ export const getGithubGitTree = async (sha: string, recursive?: boolean) => {
 
 export const getGithubGitMainSha = async () => {
   const response = await githubService.apiRequest<GithubGitBranch[]>({
-    url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/branches`
+    url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/branches`
   })
 
   return response.data.find(item => item.name === "main")?.commit.sha!
 }
 
-export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): RepoTreeNode[] => {
-  const nodes = githubGitTree
-    ?.filter(node => node.path !== ".gitignore" && node.path !== "README.md" && node.path !== "writeups-template.md")
+export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTree): RepoTree => {
+  const nodes = githubGitTree.tree.filter(node => !isGithubRootFile(node.path))
 
-  const root: RepoTreeNode = { path: "/", type: "tree", sha: "", sub: [] }
+  const root: RepoTreeNode = { path: "/", type: "tree", sha: githubGitTree.sha, sub: [] }
+  const tree: RepoTree = { root }
 
   const map: { [path: string]: RepoTreeNode } = { "": root }
 
@@ -71,5 +82,7 @@ export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTreeItem[]): Rep
     return nodes
   }
 
-  return fixDepths(root.sub) || []
+  fixDepths(tree.root.sub)
+
+  return tree
 }

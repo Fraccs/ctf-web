@@ -3,7 +3,8 @@ import { AiFillFolder, AiFillFlag } from "react-icons/ai"
 import { GitHubRepoContent } from "@/interfaces/github"
 import githubService from "@/services/github"
 import { getGithubGitTree } from "@/utils/github"
-import config from "@/utils/config"
+import { isGithubRootFile } from "@/utils/github"
+import env from "@/config/env"
 import Markdown from "@/components/Markdown"
 
 interface VisualizeTreeProps {
@@ -14,10 +15,7 @@ export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
   const { tree } = await getGithubGitTree(sha)
 
   const maxDepthReached = tree?.some(node => (
-    node.type === "blob" &&
-    node.path !== "writeups-template.md" &&
-    node.path !== "README.md" &&
-    node.path !== ".gitignore"
+    node.type === "blob" && (!isGithubRootFile(node.path))
   ))
 
   if(maxDepthReached) {
@@ -42,7 +40,7 @@ export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
 
             if(item.path === "writeup.md") {
               const response = await githubService.apiRequest<GitHubRepoContent>({
-                url: `/repos/${config.GITHUB_USER}/${config.GITHUB_TARGET_REPO}/git/blobs/${item.sha}`
+                url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/git/blobs/${item.sha}`
               })
 
               const markdown = atob(response.data.content ?? "")
