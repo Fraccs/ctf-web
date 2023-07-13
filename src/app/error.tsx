@@ -1,6 +1,6 @@
 "use client"
 
-interface ErrorProps {
+type ErrorProps = {
   error: Error,
   reset: () => void
 }

@@ -7,7 +7,7 @@ import { isGithubRootFile } from "@/utils/github"
 import env from "@/config/env"
 import Markdown from "@/components/Markdown"
 
-interface VisualizeTreeProps {
+type VisualizeTreeProps = {
   sha: string
 }
 

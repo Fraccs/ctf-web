@@ -1,6 +1,6 @@
 import VisualizeTree from "@/components/VisualizeTree"
 
-interface PageProps {
+type PageProps = {
   params: {
     sha: string
   }

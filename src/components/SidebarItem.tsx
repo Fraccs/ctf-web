@@ -5,7 +5,7 @@ import { useState } from "react"
 import { AiOutlineCaretRight, AiOutlineFlag } from "react-icons/ai"
 import { RepoTreeNode } from "@/interfaces/repoTree"
 
-interface SidebarItemProps {
+type SidebarItemProps = {
   path: string
   sha: string
   sub?: RepoTreeNode[]
