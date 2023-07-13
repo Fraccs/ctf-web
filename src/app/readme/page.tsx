@@ -1,4 +1,4 @@
-import { GitHubRepoContent } from "@/interfaces/github"
+import { GitHubRepoContent } from "@/types/github"
 import githubService from "@/services/github"
 import Markdown from "@/components/Markdown"
 import env from "@/config/env"

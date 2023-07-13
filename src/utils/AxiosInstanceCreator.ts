@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios"
 
-interface ApiResponse<T> {
+type ApiResponse<T> = {
   data: T
   status: number
   message: string

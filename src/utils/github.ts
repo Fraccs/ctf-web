@@ -1,5 +1,5 @@
-import { GithubGitBranch, GithubGitTree, GithubGitTreeItem } from "@/interfaces/github"
-import RepoTree, { RepoTreeNode } from "@/interfaces/repoTree"
+import { GithubGitBranch, GithubGitTree } from "@/types/github"
+import { RepoTree, RepoTreeNode } from "@/types/repoTree"
 import githubService from "@/services/github"
 import env from "@/config/env"
 

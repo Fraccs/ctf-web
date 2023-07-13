@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai"
-import RepoTree from "@/interfaces/repoTree"
+import { RepoTree } from "@/types/repoTree"
 import SidebarItem from "@/components/SidebarItem"
 
-interface SidebarProps {
+type SidebarProps = {
   repoTree: RepoTree
 }
 

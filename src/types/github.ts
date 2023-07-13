@@ -1,4 +1,4 @@
-export interface GithubGitBranch {
+export type GithubGitBranch = {
   name: string
   commit: {
     sha: string
@@ -7,14 +7,14 @@ export interface GithubGitBranch {
   protected: boolean
 }
 
-export interface GithubGitTree {
+export type GithubGitTree = {
   sha: string
   url: string
   truncated: boolean
   tree: GithubGitTreeItem[]
 }
 
-export interface GithubGitTreeItem {
+export type GithubGitTreeItem = {
   path: string
   mode: string
   type: "blob" | "tree"
@@ -23,7 +23,7 @@ export interface GithubGitTreeItem {
   url: string
 }
 
-export interface GitHubRepoContent {
+export type GitHubRepoContent = {
   name: string
   path: string
   sha: string
@@ -42,7 +42,7 @@ export interface GitHubRepoContent {
   }
 }
 
-export interface GithubVersion {
+export type GithubVersion = {
   url: string
   html_url: string
   id: number

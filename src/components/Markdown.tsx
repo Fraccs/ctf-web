@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { twMerge } from "tailwind-merge"
 
-interface MarkdownProps {
+type MarkdownProps = {
   className?: string
   markdown: string
 }
