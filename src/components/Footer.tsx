@@ -1,4 +1,4 @@
-import { GithubVersion } from "@/interfaces/github"
+import { GithubVersion } from "@/types/github"
 import githubService from "@/services/github"
 import env from "@/config/env"
 

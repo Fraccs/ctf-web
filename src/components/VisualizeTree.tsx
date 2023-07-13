@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { AiFillFolder, AiFillFlag } from "react-icons/ai"
-import { GitHubRepoContent } from "@/interfaces/github"
+import { GitHubRepoContent } from "@/types/github"
 import githubService from "@/services/github"
 import { getGithubGitTree } from "@/utils/github"
 import { isGithubRootFile } from "@/utils/github"

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useState } from "react"
 import { AiOutlineCaretRight, AiOutlineFlag } from "react-icons/ai"
-import { RepoTreeNode } from "@/interfaces/repoTree"
+import { RepoTreeNode } from "@/types/repoTree"
 
 type SidebarItemProps = {
   path: string
