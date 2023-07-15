@@ -2,8 +2,7 @@ import Link from "next/link"
 import { AiFillFolder, AiFillFlag } from "react-icons/ai"
 import { GitHubRepoContent } from "@/types/github"
 import githubService from "@/services/github"
-import { getGithubGitTree } from "@/utils/github"
-import { isGithubRootFile } from "@/utils/github"
+import { getGithubGitTree, isGithubRootFile } from "@/utils/github"
 import env from "@/config/env"
 import Markdown from "@/components/Markdown"
 
@@ -14,15 +13,25 @@ type VisualizeTreeProps = {
 export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
   const { tree } = await getGithubGitTree(sha)
 
-  const maxDepthReached = tree?.some(node => (
+  const isChallengeDirectory = tree.some(node => (
     node.type === "blob" && (!isGithubRootFile(node.path))
   ))
 
-  if(maxDepthReached) {
+  const isChallengeSolved = tree.some(item => item.path === "flag.txt")
+
+  if(isChallengeDirectory && !isChallengeSolved) {
+    return (
+      <div className="h-full w-full flex items-center justify-center bg-zinc-950">
+        <span className="text-lg text-gray-300 italic">This challenge hasn&apos;t been solved.</span>
+      </div>
+    )
+  }
+
+  if(isChallengeDirectory) {
     return (
       <div className="h-full w-full bg-zinc-950 text-white overflow-y-scroll">
         <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
-          {tree?.map(async item => {
+          {tree.map(async item => {
             if(item.type === "tree") {
               return <></>
             }
@@ -60,7 +69,7 @@ export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
   return (
     <div className="h-full w-full bg-zinc-950 text-white overflow-y-scroll">
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
-        {tree?.map(async item => {
+        {tree.map(async item => {
           if(item.type === "tree") {
             return (
               <Link key={item.sha} href={`/competitions/${item.sha}`}>
