@@ -1,11 +1,11 @@
 import Link from "next/link"
-import { AiFillFileMarkdown, AiFillFolder } from "react-icons/ai"
+import { AiFillFolder } from "react-icons/ai"
 import { GitHubRepoContent } from "@/types/github"
 import { getGithubGitTree, isGithubRootFile } from "@/utils/github"
-import Flag from "@/components/Flag"
-import Markdown from "@/components/Markdown"
 import githubService from "@/services/github"
 import env from "@/config/env"
+import Flag from "@/components/Flag"
+import Writeup from "@/components/Writeup"
 
 type VisualizeTreeProps = {
   sha: string
@@ -32,11 +32,7 @@ export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
     return (
       <div className="h-full w-full bg-zinc-950 text-white overflow-y-scroll">
         <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
-          {tree.map(async item => {
-            if(item.type === "tree") {
-              return <></>
-            }
-
+          {tree.filter(item => item.type === "blob").map(async item => {
             if(item.path === "flag.txt") {
               return (
                 <Flag
@@ -55,15 +51,10 @@ export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
               const markdown = atob(response.data.content ?? "")
 
               return (
-                <div key={item.sha} className="flex flex-col rounded-xl shadow-lg border border-zinc-700 overflow-hidden">
-                  <div className="flex items-center gap-4 p-4 bg-zinc-800">
-                    <AiFillFileMarkdown className="text-xl text-cyan-300"/>
-                    <span className="font-mono text-sm">writeup.md</span>
-                  </div>
-                  <div className="p-8 bg-zinc-900">
-                    <Markdown markdown={markdown}/>
-                  </div>
-                </div>
+                <Writeup
+                  key={item.sha}
+                  markdown={markdown}
+                />
               )
             }
           })}
