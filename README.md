@@ -109,8 +109,8 @@ Must be one of the following:
 * **ci**: Changes to CI configuration files and scripts
 * **docs**: Documentation only changes
 * **feat**: A code change that adds a new functionality to the application
-* **patch**: A code change that alters the behaviour of the application but doesn't add any new functionality
 * **fix**: A code change that fixes incorrect code
+* **patch**: A code change that alters the behaviour of the application but doesn't add any new functionality
 * **perf**: A code change that improves performance
 * **refactor**: A code change that doesn't alter the behaviour of the application
 * **revert**: Revert a previous change
