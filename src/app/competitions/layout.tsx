@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react"
-import { getGithubGitMainSha, getGithubGitTree, githubGitTreeToRepoTree } from "@/utils/github"
+import { githubGitTreeToRepoTree } from "@/lib/github"
+import { getGithubGitMainSha, getGithubGitTree } from "@/utils/github"
 import Sidebar from "@/components/Sidebar"
 
 export default async function Layout({ children }: PropsWithChildren) {
