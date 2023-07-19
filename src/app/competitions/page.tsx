@@ -5,6 +5,8 @@ export default async function Page() {
   const sha = await getGithubGitMainSha()
 
   return (
-    <VisualizeTree sha={sha}/>
+    <main className="h-full w-full">
+      <VisualizeTree sha={sha}/>
+    </main>
   )
 }

@@ -1,5 +1,7 @@
 import { PropsWithChildren } from "react"
-import { getGithubGitMainSha, getGithubGitTree, githubGitTreeToRepoTree } from "@/utils/github"
+import { githubGitTreeToRepoTree } from "@/lib/github"
+import { getGithubGitMainSha, getGithubGitTree } from "@/utils/github"
+import PathNav from "@/components/PathNav"
 import Sidebar from "@/components/Sidebar"
 
 export default async function Layout({ children }: PropsWithChildren) {
@@ -9,9 +11,12 @@ export default async function Layout({ children }: PropsWithChildren) {
   const repoTree = githubGitTreeToRepoTree(githubGitTree)
 
   return (
-    <main className="h-full w-full flex">
+    <div className="h-full w-full flex">
       <Sidebar repoTree={repoTree}/>
-      {children}
-    </main>
+      <div className="h-full w-full flex flex-col">
+        <PathNav repoTree={repoTree}/>
+        {children}
+      </div>
+    </div>
   )
 }
