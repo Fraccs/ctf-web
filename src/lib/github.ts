@@ -12,6 +12,46 @@ export const isGithubRootFile = (fileName: string): boolean => {
   return rootFiles.includes(fileName)
 }
 
+export const getRepoTreeNodeBySha = (repoTree: RepoTree, sha: string) => {
+  let node
+
+  (function traverse(currentNode: RepoTreeNode) {
+    if(!currentNode.sub) {
+      return
+    }
+
+    if(currentNode.sha === sha) {
+      node = currentNode
+    }
+
+    currentNode.sub.forEach(n => {
+      traverse(n)
+    })
+  })(repoTree.root)
+
+  return node
+}
+
+export const getRepoTreeNodeParent = (repoTree: RepoTree, sha: string) => {
+  let parentNode
+
+  (function traverse(currentNode: RepoTreeNode) {
+    if(!currentNode.sub) {
+      return
+    }
+
+    for(let n of currentNode.sub) {
+      if(n.sha === sha) {
+        parentNode = currentNode
+      }
+
+      traverse(n)
+    }
+  })(repoTree.root)
+
+  return parentNode
+}
+
 export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTree): RepoTree => {
   const nodes = githubGitTree.tree.filter(node => !isGithubRootFile(node.path))
 
