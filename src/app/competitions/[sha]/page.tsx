@@ -6,8 +6,10 @@ type PageProps = {
   }
 }
 
-export default async function Page({ params }: PageProps) {
+export default function Page({ params }: PageProps) {
   return (
-    <VisualizeTree sha={params.sha}/>
+    <main className="h-full w-full">
+      <VisualizeTree sha={params.sha}/>
+    </main>
   )
 }
