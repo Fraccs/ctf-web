@@ -12,56 +12,58 @@ export const isGithubRootFile = (fileName: string): boolean => {
   return rootFiles.includes(fileName)
 }
 
-export const getRepoTreeNodeBySha = (repoTree: RepoTree, sha: string) => {
-  let node
-
-  (function traverse(currentNode: RepoTreeNode) {
+export const traverseRepoTree = (repoTree: RepoTree, callback: (currentNode: RepoTreeNode) => void) => {
+  const traverse = (currentNode: RepoTreeNode) => {
     if(!currentNode.sub) {
       return
     }
 
-    if(currentNode.sha === sha) {
-      node = currentNode
-    }
+    callback(currentNode)
 
     currentNode.sub.forEach(n => {
       traverse(n)
     })
-  })(repoTree.root)
+  }
+
+  traverse(repoTree.root)
+}
+
+export const getRepoTreeNodeBySha = (repoTree: RepoTree, sha: string) => {
+  let node: RepoTreeNode | undefined
+
+  traverseRepoTree(repoTree, currentNode => {
+    if(currentNode.sha === sha) {
+      node = currentNode
+    }
+  })
 
   return node
 }
 
 export const getRepoTreeNodeParent = (repoTree: RepoTree, sha: string) => {
-  let parentNode
+  let parent: RepoTreeNode | undefined
 
-  (function traverse(currentNode: RepoTreeNode) {
-    if(!currentNode.sub) {
-      return
-    }
-
-    for(let n of currentNode.sub) {
+  traverseRepoTree(repoTree, currentNode => {
+    currentNode.sub?.forEach(n => {
       if(n.sha === sha) {
-        parentNode = currentNode
+        parent = currentNode
       }
+    })
+  })
 
-      traverse(n)
-    }
-  })(repoTree.root)
-
-  return parentNode
+  return parent
 }
 
 export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTree): RepoTree => {
-  const nodes = githubGitTree.tree.filter(node => !isGithubRootFile(node.path))
+  const githubGitTreeItems = githubGitTree.tree.filter(item => !isGithubRootFile(item.path))
 
   const root: RepoTreeNode = { path: "/", type: "tree", sha: githubGitTree.sha, sub: [] }
-  const tree: RepoTree = { root }
+  const repoTree: RepoTree = { root }
 
-  const map: { [path: string]: RepoTreeNode } = { "": root }
+  const map: { [path: string]: RepoTreeNode } = { root }
 
-  nodes.forEach(node => {
-    const parts = node.path.split("/")
+  githubGitTreeItems.forEach(item => {
+    const parts = item.path.split("/")
 
     let parent = root
 
@@ -70,7 +72,7 @@ export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTree): RepoTree 
       const path = i === 0 ? part : `${parent.path}/${part}`
 
       if(!map[path]) {
-        const newObject: RepoTreeNode = { path, type: node.type, sha: "", sub: [] }
+        const newObject: RepoTreeNode = { path, type: item.type, sha: "", sub: [] }
 
         map[path] = newObject
 
@@ -80,7 +82,7 @@ export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTree): RepoTree 
       parent = map[path]
     }
 
-    parent.sha = node.sha
+    parent.sha = item.sha
   })
 
   /*
@@ -88,23 +90,11 @@ export const githubGitTreeToRepoTree = (githubGitTree: GithubGitTree): RepoTree 
    * If any type of blob is contained in a directory, that directory is consedered
    * a challenge directory.
    */
-  const fixDepths = (nodes?: RepoTreeNode[]) => {
-    if(!nodes) {
-      return
+  traverseRepoTree(repoTree, currentNode => {
+    if(currentNode.sub?.some(n => n.type === "blob")) {
+      currentNode.sub = []
     }
+  })
 
-    nodes?.forEach(node => {
-      if(node.sub?.some(s => s.type === "blob")) {
-        node.sub = []
-      }
-
-      fixDepths(node.sub)
-    })
-
-    return nodes
-  }
-
-  fixDepths(tree.root.sub)
-
-  return tree
+  return repoTree
 }
