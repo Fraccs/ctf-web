@@ -31,35 +31,33 @@ export default async function Directory({ sha }: DirectoryProps) {
 
   if(isChallengeDirectory) {
     return (
-      <div className="h-full w-full bg-zinc-950 text-white overflow-y-scroll">
-        <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
-          {tree.filter(item => item.type === "blob").map(async item => {
-            if(item.path === "flag.txt") {
-              return (
-                <Flag
-                  key={item.sha}
-                  path={item.path}
-                  sha={item.sha}
-                />
-              )
-            }
+      <div className="h-full grid grid-cols-1 gap-4 p-4 bg-zinc-950 text-white md:grid-cols-2">
+        {tree.filter(item => item.type === "blob").map(async item => {
+          if(item.path === "flag.txt") {
+            return (
+              <Flag
+                key={item.sha}
+                path={item.path}
+                sha={item.sha}
+              />
+            )
+          }
 
-            if(item.path === "writeup.md") {
-              const response = await githubService.apiRequest<GitHubRepoContent>({
-                url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/git/blobs/${item.sha}`
-              })
+          if(item.path === "writeup.md") {
+            const response = await githubService.apiRequest<GitHubRepoContent>({
+              url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/git/blobs/${item.sha}`
+            })
 
-              const markdown = atob(response.data.content ?? "")
+            const markdown = atob(response.data.content ?? "")
 
-              return (
-                <Writeup
-                  key={item.sha}
-                  markdown={markdown}
-                />
-              )
-            }
-          })}
-        </div>
+            return (
+              <Writeup
+                key={item.sha}
+                markdown={markdown}
+              />
+            )
+          }
+        })}
       </div>
     )
   }
@@ -71,7 +69,7 @@ export default async function Directory({ sha }: DirectoryProps) {
           if(item.type === "tree") {
             return (
               <Link key={item.sha} href={`/competitions/${item.sha}`}>
-                <article className="h-full flex flex-col rounded-lg bg-zinc-900 p-4 border border-zinc-800 shadow-lg">
+                <article className="h-full flex flex-col rounded-lg bg-zinc-900 p-4 border border-zinc-800 shadow-lg hover:bg-zinc-950">
                   <div className="flex items-center justify-center rounded-lg px-4 py-2 border border-zinc-800">
                     <AiFillFolder className="text-xl text-yellow-300"/>
                     <span className="mx-auto font-bold text-sm text-center">{item.path}</span>
