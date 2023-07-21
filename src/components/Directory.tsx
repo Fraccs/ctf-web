@@ -72,7 +72,7 @@ export default async function Directory({ sha }: DirectoryProps) {
                 <article className="h-full flex flex-col rounded-lg bg-zinc-900 p-4 border border-zinc-800 shadow-lg hover:bg-zinc-950">
                   <div className="flex items-center justify-center rounded-lg px-4 py-2 border border-zinc-800">
                     <AiFillFolder className="text-xl text-yellow-300"/>
-                    <span className="mx-auto font-bold text-sm text-center">{item.path}</span>
+                    <span className="mx-auto font-mono text-sm text-center">{item.path}</span>
                   </div>
                 </article>
               </Link>
