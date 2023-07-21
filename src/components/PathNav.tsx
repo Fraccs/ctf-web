@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import { AiOutlineRollback } from "react-icons/ai"
+import { AiOutlineHome, AiOutlineRollback } from "react-icons/ai"
 import { RepoTree, RepoTreeNode } from "@/types/repoTree"
 import { getRepoTreeNodeBySha, getRepoTreeNodeParent } from "@/lib/github"
 
@@ -48,8 +48,8 @@ export default function PathNav({ repoTree }: PathNavProps) {
         </ul>
       </nav>
       <div className="p-4 border-l border-zinc-800">
-        <Link href={`/competitions/${parentNode?.sha}`} className="text-white transition-colors hover:text-yellow-300 hover:opacity-90">
-          <AiOutlineRollback className="text-2xl"/>
+        <Link href={`/competitions/${parentNode?.sha}`} className="text-2xl text-white">
+          {segments.length === 0 ? <AiOutlineHome/> : <AiOutlineRollback className="transition-colors hover:text-yellow-300 hover:opacity-90"/>}
         </Link>
       </div>
     </div>
