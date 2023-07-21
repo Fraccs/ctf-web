@@ -1,4 +1,4 @@
-import VisualizeTree from "@/components/VisualizeTree"
+import Directory from "@/components/Directory"
 
 type PageProps = {
   params: {
@@ -9,7 +9,7 @@ type PageProps = {
 export default function Page({ params }: PageProps) {
   return (
     <main className="h-full w-full">
-      <VisualizeTree sha={params.sha}/>
+      <Directory sha={params.sha}/>
     </main>
   )
 }

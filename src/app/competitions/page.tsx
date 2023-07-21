@@ -1,12 +1,12 @@
 import { getGithubGitMainSha } from "@/utils/github"
-import VisualizeTree from "@/components/VisualizeTree"
+import Directory from "@/components/Directory"
 
 export default async function Page() {
   const sha = await getGithubGitMainSha()
 
   return (
     <main className="h-full w-full">
-      <VisualizeTree sha={sha}/>
+      <Directory sha={sha}/>
     </main>
   )
 }
