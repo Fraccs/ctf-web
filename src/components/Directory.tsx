@@ -8,15 +8,15 @@ import env from "@/config/env"
 import Flag from "@/components/Flag"
 import Writeup from "@/components/Writeup"
 
-type VisualizeTreeProps = {
+type DirectoryProps = {
   sha: string
 }
 
-export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
+export default async function Directory({ sha }: DirectoryProps) {
   const { tree } = await getGithubGitTree(sha)
 
-  const isChallengeDirectory = tree.some(node => (
-    node.type === "blob" && (!isGithubRootFile(node.path))
+  const isChallengeDirectory = tree.some(item => (
+    item.type === "blob" && (!isGithubRootFile(item.path))
   ))
 
   const isChallengeSolved = tree.some(item => item.path === "flag.txt")
@@ -67,7 +67,7 @@ export default async function VisualizeTree({ sha }: VisualizeTreeProps) {
   return (
     <div className="h-full w-full bg-zinc-950 text-white overflow-y-scroll">
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
-        {tree.map(async item => {
+        {tree.map(item => {
           if(item.type === "tree") {
             return (
               <Link key={item.sha} href={`/competitions/${item.sha}`}>
