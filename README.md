@@ -34,9 +34,9 @@
 
 ### DevOps
 
-> Git, GitHub, GitHub Actions, Docker
+> Git, GitHub, GitHub Actions, Jest, Vercel
 
-![My Skills](https://skillicons.dev/icons?i=git,github,githubactions,docker)
+![My Skills](https://skillicons.dev/icons?i=git,github,githubactions,jest,vercel)
 
 ## Workflow
 
