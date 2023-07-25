@@ -1,4 +1,5 @@
 import "../assets/styles/index.css"
+import { Analytics } from "@vercel/analytics/react"
 import { Inter } from "next/font/google"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} absolute h-full w-full flex flex-col`}>
         <Header/>
+        <Analytics/>
         {children}
         <Footer/>
       </body>
