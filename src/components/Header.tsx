@@ -22,6 +22,9 @@ export default function Header() {
         <Link href={`https://github.com/${env.GITHUB_USER}/${env.GITHUB_REPO}`} target="_blank">
           <AiOutlineGithub className="text-2xl text-white hover:opacity-90"/>
         </Link>
+        <Link href="/login">
+          <AiOutlineLogin className="text-2xl text-white hover:opacity-90"/>
+        </Link>
       </div>
     </header>
   )
