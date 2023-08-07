@@ -7,12 +7,15 @@ import githubService from "@/services/github"
 import env from "@/config/env"
 import Flag from "@/components/Flag"
 import Writeup from "@/components/Writeup"
+import serverUseAuth from "@/hooks/serverUseAuth"
 
 type DirectoryProps = {
   sha: string
 }
 
 export default async function Directory({ sha }: DirectoryProps) {
+  const auth = serverUseAuth()
+
   const { tree } = await getGithubGitTree(sha)
 
   const isChallengeDirectory = tree.some(item => (
@@ -34,11 +37,22 @@ export default async function Directory({ sha }: DirectoryProps) {
       <div className="h-full grid grid-cols-1 gap-4 p-4 bg-zinc-950 text-white md:grid-cols-2">
         {tree.filter(item => item.type === "blob").map(async item => {
           if(item.path === "flag.txt") {
+            let content = undefined
+
+            if(auth?.permissions === "admin") {
+              const response = await githubService.apiRequest<GitHubRepoContent>({
+                url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/git/blobs/${item.sha}`
+              })
+
+              content = atob(response.data.content ?? "")
+            }
+
             return (
               <Flag
                 key={item.sha}
                 path={item.path}
                 sha={item.sha}
+                content={content}
               />
             )
           }

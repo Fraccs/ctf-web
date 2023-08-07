@@ -1,10 +1,13 @@
 import Image from "next/image"
 import Link from "next/link"
-import { AiOutlineGithub, AiOutlineLogin } from "react-icons/ai"
+import { AiOutlineGithub, AiOutlineLogin, AiOutlineUser } from "react-icons/ai"
 import env from "@/config/env"
+import serverUseAuth from "@/hooks/serverUseAuth"
 import flagImg from "@/assets/images/triangular-flag.png"
 
 export default function Header() {
+  const auth = serverUseAuth()
+
   return (
     <header className="flex items-center justify-between px-8 py-4 bg-zinc-900 border-b border-zinc-800">
       <Link href="/">
@@ -22,6 +25,11 @@ export default function Header() {
         <Link href={`https://github.com/${env.GITHUB_USER}/${env.GITHUB_REPO}`} target="_blank">
           <AiOutlineGithub className="text-2xl text-white hover:opacity-90"/>
         </Link>
+        {auth ?
+          <AiOutlineUser title={`You are logged in as ${auth.username}`} className="text-2xl text-white hover:opacity-90"/> :
+          <Link href="/login">
+            <AiOutlineLogin className="text-2xl text-white hover:opacity-90"/>
+          </Link>}
       </div>
     </header>
   )
