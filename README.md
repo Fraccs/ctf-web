@@ -30,13 +30,9 @@
 
 > Typescript, Nextjs, Tailwindcss
 
-![My Skills](https://skillicons.dev/icons?i=ts,next,tailwindcss)
-
 ### DevOps
 
-> Git, GitHub, GitHub Actions, Jest, Vercel
-
-![My Skills](https://skillicons.dev/icons?i=git,github,githubactions,jest,vercel)
+> Git, GitHub, GitHub Actions, Jest, Cypress, Vercel
 
 ## Workflow
 
