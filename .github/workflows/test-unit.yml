@@ -1,9 +1,9 @@
-name: test
+name: test-unit
 
 on: pull_request
 
 jobs:
-  test:
+  test-unit:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
