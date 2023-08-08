@@ -1,9 +1,10 @@
-name: test-unit
+name: test
 
 on: pull_request
 
 jobs:
-  test-unit:
+  unit:
+    name: Run unit tests
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -16,3 +17,14 @@ jobs:
       run: |
         npm ci
         npm run test
+
+  e2e:
+    name: Run e2e tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Test
+      uses: cypress-io/github-action@v5
+      with:
+        browser: chrome
