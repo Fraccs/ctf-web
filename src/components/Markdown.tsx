@@ -3,8 +3,9 @@
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism"
+import { vscDarkPlus, vs } from "react-syntax-highlighter/dist/esm/styles/prism"
 import { twMerge } from "tailwind-merge"
+import { useTheme } from "next-themes"
 
 type MarkdownProps = {
   className?: string
@@ -12,6 +13,10 @@ type MarkdownProps = {
 }
 
 export default function Markdown({ markdown, className }: MarkdownProps) {
+  const { theme } = useTheme()
+
+  const darkThemeProse = "prose-invert"
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -22,7 +27,7 @@ export default function Markdown({ markdown, className }: MarkdownProps) {
           return !inline && match ?
             <SyntaxHighlighter
               {...props}
-              style={vscDarkPlus}
+              style={theme === "dark" ? vscDarkPlus : vs}
               language={match[1]}
             >
               {String(children).replace(/\n$/, "")}
@@ -32,7 +37,7 @@ export default function Markdown({ markdown, className }: MarkdownProps) {
             </code>
         }
       }}
-      className={twMerge("prose prose-invert font-mono", className)}
+      className={twMerge(`${theme === "dark" ? darkThemeProse : ""} prose font-mono`, className)}
     >
       {markdown}
     </ReactMarkdown>

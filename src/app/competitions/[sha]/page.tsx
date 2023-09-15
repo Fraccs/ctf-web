@@ -8,7 +8,7 @@ type PageProps = {
 
 export default function Page({ params }: PageProps) {
   return (
-    <main className="h-full w-full flex flex-col overflow-y-scroll">
+    <main className="flex-1 w-full flex flex-col">
       <Directory sha={params.sha}/>
     </main>
   )

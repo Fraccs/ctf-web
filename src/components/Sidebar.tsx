@@ -14,8 +14,8 @@ export default function Sidebar({ repoTree }: SidebarProps) {
 
   if(!isOpen) {
     return (
-      <aside className="flex flex-col gap-2 text-white bg-zinc-900 border-r border-zinc-800">
-        <article className="sticky bottom-0 flex items-center justify-end p-4 bg-zinc-900 border-b border-zinc-800">
+      <aside className="flex flex-col gap-2 border-r">
+        <article className="sticky bottom-0 flex items-center justify-end p-4 border-b">
           <button type="button" onClick={() => setIsOpen(!isOpen)}>
             <AiOutlineMenuUnfold
               className="text-2xl hover:opacity-90"
@@ -27,15 +27,15 @@ export default function Sidebar({ repoTree }: SidebarProps) {
   }
 
   return (
-    <aside className="flex flex-col w-96 text-white bg-zinc-900 border-r border-zinc-800">
-      <article className="sticky bottom-0 flex items-center justify-end p-4 bg-zinc-900 border-b border-zinc-800">
+    <aside className="flex flex-col w-96 border-r">
+      <article className="sticky bottom-0 flex items-center justify-end p-4 border-b">
         <button type="button" onClick={() => setIsOpen(!isOpen)}>
           <AiOutlineMenuFold
             className="text-2xl hover:opacity-90"
           />
         </button>
       </article>
-      <div className="flex flex-col gap-4 p-4 overflow-x-hidden overflow-y-scroll">
+      <div className="flex flex-col gap-4 p-4 overflow-auto">
         {repoTree.root.sub?.map((node, i) => {
           return (
             <SidebarItem

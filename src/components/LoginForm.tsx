@@ -55,8 +55,8 @@ export default function LoginForm() {
   }, [isError])
 
   return (
-    <form onSubmit={onSubmit} className="w-96 flex flex-col items-center gap-4 text-white">
-      <div className="w-full flex items-center gap-2 p-2 rounded-md border border-zinc-800">
+    <form onSubmit={onSubmit} className="w-96 flex flex-col items-center gap-4">
+      <div className="w-full flex items-center gap-2 p-2 rounded-md border">
         <AiOutlineUser/>
         <input
           type="text"
@@ -66,7 +66,7 @@ export default function LoginForm() {
           className="bg-transparent focus:outline-none"
         />
       </div>
-      <div className="w-full flex items-center gap-2 p-2 rounded-md border border-zinc-800">
+      <div className="w-full flex items-center gap-2 p-2 rounded-md border">
         <AiOutlineKey/>
         <input
           type={isPasswordShown ? "text" : "password"}
@@ -83,7 +83,7 @@ export default function LoginForm() {
             <AiOutlineEyeInvisible className="hover:opacity-90"/>
           </button>}
       </div>
-      <button type="submit" className={`w-full px-4 py-2 rounded-md border border-zinc-800 bg-gradient-to-r ${isLoading || isError ? "from-zinc-800 via-rose-600 to-zinc-800 animate-gradient-x animate-pulse" : "from-zinc-900 to-zinc-800"} hover:opacity-90`}>
+      <button type="submit" className={`w-full px-4 py-2 rounded-md border bg-gradient-to-r ${isLoading || isError ? "from-zinc-800 via-rose-600 to-zinc-800 animate-gradient-x animate-pulse" : "from-zinc-900 to-zinc-800"} hover:opacity-90`}>
         <div className="flex items-center justify-center gap-2">
           {isError ?
             <>

@@ -6,8 +6,8 @@ import { getGithubGitTree } from "@/utils/github"
 import githubService from "@/services/github"
 import env from "@/config/env"
 import Flag from "@/components/Flag"
-import Writeup from "@/components/Writeup"
 import serverUseAuth from "@/hooks/serverUseAuth"
+import Markdown from "@/components/Markdown"
 
 type DirectoryProps = {
   sha: string
@@ -26,7 +26,7 @@ export default async function Directory({ sha }: DirectoryProps) {
 
   if(isChallengeDirectory && !isChallengeSolved) {
     return (
-      <div className="h-full w-full flex items-center justify-center bg-zinc-950">
+      <div className="flex items-center justify-center mt-auto mb-auto">
         <span className="text-lg text-gray-300 italic">This challenge hasn&apos;t been solved.</span>
       </div>
     )
@@ -34,7 +34,7 @@ export default async function Directory({ sha }: DirectoryProps) {
 
   if(isChallengeDirectory) {
     return (
-      <div className="h-full grid grid-cols-1 gap-4 p-4 bg-zinc-950 text-white md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
         {tree.filter(item => item.type === "blob").map(async item => {
           if(item.path === "flag.txt") {
             let content = undefined
@@ -65,10 +65,7 @@ export default async function Directory({ sha }: DirectoryProps) {
             const markdown = atob(response.data.content ?? "")
 
             return (
-              <Writeup
-                key={item.sha}
-                markdown={markdown}
-              />
+              <Markdown key={item.sha} markdown={markdown}/>
             )
           }
         })}
@@ -77,14 +74,14 @@ export default async function Directory({ sha }: DirectoryProps) {
   }
 
   return (
-    <div className="h-full w-full bg-zinc-950 text-white overflow-y-scroll">
+    <div className="h-full w-full">
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
         {tree.map(item => {
           if(item.type === "tree") {
             return (
               <Link key={item.sha} href={`/competitions/${item.sha}`}>
-                <article className="h-full flex flex-col rounded-lg bg-zinc-900 p-4 border border-zinc-800 shadow-lg hover:bg-zinc-950">
-                  <div className="flex items-center justify-center rounded-lg px-4 py-2 border border-zinc-800">
+                <article className="h-full flex flex-col rounded-lg p-4 border shadow-lg">
+                  <div className="flex items-center justify-center rounded-lg px-4 py-2 border">
                     <AiFillFolder className="text-xl text-yellow-300"/>
                     <span className="mx-auto font-mono text-sm text-center">{item.path}</span>
                   </div>
