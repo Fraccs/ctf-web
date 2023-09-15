@@ -13,7 +13,7 @@ export default function LoginForm() {
   const [isError, setIsError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const { push } = useRouter()
+  const { push, refresh } = useRouter()
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -35,6 +35,7 @@ export default function LoginForm() {
       })
 
       push("/")
+      refresh()
     }
     catch(e) {
       setIsError(true)
