@@ -1,5 +1,7 @@
 "use client"
 
+import { Button } from "@/components/ui/Button"
+
 type ErrorProps = {
   error: Error,
   reset: () => void
@@ -7,12 +9,12 @@ type ErrorProps = {
 
 export default function Error({ error, reset }: ErrorProps) {
   return (
-    <main className="h-full flex items-center justify-center bg-zinc-950 text-white overflow-y-scroll">
+    <main className="h-full flex items-center justify-center">
       <div className="flex flex-col gap-8 items-center">
         <div className="font-bold text-4xl">Oops.. {error.message}.</div>
-        <button onClick={reset} type="button" className="px-16 py-2 rounded-lg bg-gradient-to-br from-red-600 via-rose-600 to-red-500 font-bold text-center text-white shadow-2xl drop-shadow-2xl shadow-rose-600 hover:opacity-90">
+        <Button onClick={reset} className="font-bold">
           Retry
-        </button>
+        </Button>
       </div>
     </main>
   )

@@ -11,9 +11,9 @@ export default async function Layout({ children }: PropsWithChildren) {
   const repoTree = githubGitTreeToRepoTree(githubGitTree)
 
   return (
-    <div className="h-full w-full flex">
+    <div className="flex-1 w-full flex">
       <Sidebar repoTree={repoTree}/>
-      <div className="h-full w-full flex flex-col">
+      <div className="w-full flex flex-col">
         <PathNav repoTree={repoTree}/>
         {children}
       </div>

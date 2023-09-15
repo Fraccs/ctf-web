@@ -32,9 +32,9 @@ export default function PathNav({ repoTree }: PathNavProps) {
   }, [sha])
 
   return (
-    <div className="flex items-center bg-zinc-900 border-b border-zinc-800">
+    <div className="flex items-center border-b">
       <nav className="w-full">
-        <ul className="flex items-center gap-2 px-4 font-mono font-semibold text-sm text-white">
+        <ul className="flex items-center gap-2 px-4 font-mono font-semibold text-sm">
           {segments.length === 0 ? <span className="text-zinc-600">/</span> : <></>}
           {segments.map((segment, i) => {
             return (
@@ -47,8 +47,8 @@ export default function PathNav({ repoTree }: PathNavProps) {
           })}
         </ul>
       </nav>
-      <div className="p-4 border-l border-zinc-800">
-        <Link href={`/competitions/${parentNode?.sha}`} className="text-2xl text-white">
+      <div className="p-4 border-l">
+        <Link href={`/competitions/${parentNode?.sha}`} className="text-2xl">
           {segments.length === 0 ? <AiOutlineHome/> : <AiOutlineRollback className="transition-colors hover:text-yellow-300 hover:opacity-90"/>}
         </Link>
       </div>
