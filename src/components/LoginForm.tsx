@@ -84,16 +84,16 @@ export default function LoginForm() {
             <AiOutlineEyeInvisible className="hover:opacity-90"/>
           </button>}
       </div>
-      <button type="submit" className={`w-full px-4 py-2 rounded-md border bg-gradient-to-r ${isLoading || isError ? "from-zinc-800 via-rose-600 to-zinc-800 animate-gradient-x animate-pulse" : "from-zinc-900 to-zinc-800"} hover:opacity-90`}>
+      <button type="submit" className="w-full px-4 py-2 rounded-md border bg-secondary font-bold hover:opacity-90">
         <div className="flex items-center justify-center gap-2">
           {isError ?
             <>
               <AiOutlineCloseCircle className="text-xl"/>
-              <span className="font-bold">Error</span>
+              <span>Error</span>
             </> :
             <>
               <AiOutlineLogin className="text-xl"/>
-              <span className="font-bold">Login</span>
+              <span>Login</span>
             </>}
         </div>
       </button>
