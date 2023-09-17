@@ -11,9 +11,9 @@ export const getGithubGitTree = async (sha: string, recursive?: boolean) => {
 }
 
 export const getGithubGitMainSha = async () => {
-  const response = await githubService.apiRequest<GithubGitBranch[]>({
-    url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/branches`
+  const response = await githubService.apiRequest<GithubGitBranch>({
+    url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/branches/main`
   })
 
-  return response.data.find(item => item.name === "main")?.commit.sha!
+  return response.data.commit.sha
 }

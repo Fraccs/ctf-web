@@ -1,10 +1,10 @@
-import { GitHubRepoContent } from "@/types/github"
+import { GithubGitBlob } from "@/types/github"
 import githubService from "@/services/github"
 import Markdown from "@/components/Markdown"
 import env from "@/config/env"
 
 const getReadme = async () => {
-  const response = await githubService.apiRequest<GitHubRepoContent>({
+  const response = await githubService.apiRequest<GithubGitBlob>({
     url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/contents/README.md`
   })
 
