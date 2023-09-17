@@ -1,12 +1,12 @@
 import env from "@/config/env"
-import { GitHubRepoContent, GithubGitTreeItem } from "@/types/github"
+import { GithubGitBlob, GithubGitTree } from "@/types/github"
 import githubService from "@/services/github"
 import serverUseAuth from "@/hooks/serverUseAuth"
 import Flag from "@/components/Flag"
 import Markdown from "@/components/Markdown"
 
 export type DirectoryChallengeProps = {
-  tree: GithubGitTreeItem[]
+  tree: GithubGitTree["tree"]
 }
 
 export default function DirectoryChallenge({ tree }: DirectoryChallengeProps) {
@@ -19,7 +19,7 @@ export default function DirectoryChallenge({ tree }: DirectoryChallengeProps) {
           let content = undefined
 
           if(auth?.permissions === "admin") {
-            const response = await githubService.apiRequest<GitHubRepoContent>({
+            const response = await githubService.apiRequest<GithubGitBlob>({
               url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/git/blobs/${item.sha}`
             })
 
@@ -29,15 +29,13 @@ export default function DirectoryChallenge({ tree }: DirectoryChallengeProps) {
           return (
             <Flag
               key={item.sha}
-              path={item.path}
-              sha={item.sha}
               content={content}
             />
           )
         }
 
         if(item.path === "writeup.md") {
-          const response = await githubService.apiRequest<GitHubRepoContent>({
+          const response = await githubService.apiRequest<GithubGitBlob>({
             url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/git/blobs/${item.sha}`
           })
 

@@ -1,56 +1,13 @@
-export type GithubGitBranch = {
-  name: string
-  commit: {
-    sha: string
-    url: string
-  }
-  protected: boolean
+import { Endpoints } from "@octokit/types"
+
+export type GithubGitBranch = Endpoints["GET /repos/{owner}/{repo}/branches/{branch}"]["response"]["data"]
+
+/* Forces the the properties of a `GithubGitTree["tree"]` to be `Required` and its `type` to be either `blob` or `tree" */
+export type GithubGitTree = Omit<Endpoints["GET /repos/{owner}/{repo}/git/trees/{tree_sha}"]["response"]["data"], "tree"> & {
+  tree: [Required<Endpoints["GET /repos/{owner}/{repo}/git/trees/{tree_sha}"]["response"]["data"]["tree"][0]> & {
+    type: "blob" | "tree"
+  }]
 }
 
-export type GithubGitTree = {
-  sha: string
-  url: string
-  truncated: boolean
-  tree: GithubGitTreeItem[]
-}
-
-export type GithubGitTreeItem = {
-  path: string
-  mode: string
-  type: "blob" | "tree"
-  sha: string
-  size: number
-  url: string
-}
-
-export type GitHubRepoContent = {
-  name: string
-  path: string
-  sha: string
-  size: number
-  url: string
-  html_url: string
-  git_url: string
-  download_url: string | null
-  type: string
-  content?: string
-  encoding?: string
-  _links?: {
-    self: string
-    git: string
-    html: string
-  }
-}
-
-export type GithubVersion = {
-  url: string
-  html_url: string
-  id: number
-  tag_name: string
-  name: string
-  draft: false
-  prerelease: false
-  created_at: Date
-  published_at: Date
-  assets?: []
-}
+export type GithubGitBlob = Endpoints["GET /repos/{owner}/{repo}/git/blobs/{file_sha}"]["response"]["data"]
+export type GithubLatestRealease = Endpoints["GET /repos/{owner}/{repo}/releases/latest"]["response"]["data"]

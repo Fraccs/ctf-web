@@ -1,9 +1,9 @@
-import { GithubVersion } from "@/types/github"
+import { GithubLatestRealease } from "@/types/github"
 import githubService from "@/services/github"
 import env from "@/config/env"
 
 export default async function Footer() {
-  const versionResponse = await githubService.apiRequest<GithubVersion>({
+  const versionResponse = await githubService.apiRequest<GithubLatestRealease>({
     url: `/repos/${env.GITHUB_USER}/${env.GITHUB_REPO}/releases/latest`
   })
 
