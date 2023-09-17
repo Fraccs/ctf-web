@@ -12,7 +12,7 @@ export const getGithubGitTree = async (sha: string, recursive?: boolean) => {
 
 export const getGithubGitMainSha = async () => {
   const response = await githubService.apiRequest<GithubGitBranch>({
-    url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/branches/main`
+    url: `/repos/${env.GITHUB_USER}/${env.GITHUB_TARGET_REPO}/branches/${env.GITHUB_DEFAULT_BRANCH}`
   })
 
   return response.data.commit.sha
